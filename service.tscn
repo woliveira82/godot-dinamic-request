@@ -4,3 +4,5 @@
 
 [node name="Service" type="Node"]
 script = ExtResource("1_y8uic")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
