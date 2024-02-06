@@ -3,37 +3,22 @@ extends Node
 signal finished
 
 var _queue: Array
-var _busy: bool = false
 var _response
 
-@onready var _http_request := $HTTPRequest
+@onready var _http_request
 
 
 func post_request(request, handle_function: Callable):
 	self.finished.connect(handle_function)
-	self._queue.push_back(request)
-	if not _busy:
-		self._handle_next_request()
-
-
-func _handle_next_request():
-	if self._queue.size() > 0:
-		var request = self._queue.pop_front()
-		self._handle(request)
-		await finished
-		self._handle_next_request()
-
-
-func _handle(request):
-	self._busy = true
 	self._response = null
-	
+	self._http_request = HTTPRequest.new()
+	add_child(self._http_request)
 	self._http_request.request_completed.connect(self._on_request_completed)
 	self._http_request.request(request.url)
 	await self._http_request.request_completed
-	
-	self._busy = false
 	self.finished.emit(self._response)
+	self.finished.disconnect(handle_function)
+	self._http_request.queue_free()
 
 
 func _on_request_completed(result, response_code, headers, body):

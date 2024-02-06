@@ -10,10 +10,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w72g2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CatVBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
@@ -23,13 +23,36 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+[node name="CatRichTextLabel" type="RichTextLabel" parent="CatVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="CatButton" type="Button" parent="CatVBoxContainer"]
 layout_mode = 2
-text = "MAKE REQUEST"
+text = "CAT FACTS"
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="DogVBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DogRichTextLabel" type="RichTextLabel" parent="DogVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="DogButton" type="Button" parent="DogVBoxContainer"]
+layout_mode = 2
+text = "DOG FACTS"
+
+[connection signal="pressed" from="CatVBoxContainer/CatButton" to="." method="_on_cat_button_pressed"]
+[connection signal="pressed" from="DogVBoxContainer/DogButton" to="." method="_on_dog_button_pressed"]
