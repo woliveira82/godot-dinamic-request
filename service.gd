@@ -1,23 +1,44 @@
 extends Node
 
-var _queue: Array
-var _response
+@export var generic_scene_tscn := preload("res://generic_request.tscn")
 
 
-func post_request(request, handle_function: Callable):
-	self._response = null
-	var instance = HTTPRequest.new()
-	add_child(instance)
-	instance.request_completed.connect(self._on_request_completed)
-	instance.request(request.url)
-	await instance.request_completed
-	handle_function.call(self._response)
-	instance.queue_free()
-
-
-func _on_request_completed(result, response_code, headers, body):
-	if response_code != 200:
-		push_error("ERROR: Response status = %d" % response_code)
-		return
+func request(method: String, url: String, body: Dictionary = {}, headers: Dictionary = {}):
+	var http_method: HTTPClient.Method
+	match method.to_upper():
+		"GET":
+			http_method = HTTPClient.METHOD_GET
+		"POST":
+			http_method = HTTPClient.METHOD_POST
+		"PUT":
+			http_method = HTTPClient.METHOD_PUT
+		"DELETE":
+			http_method = HTTPClient.METHOD_DELETE
+		_:
+			http_method = HTTPClient.METHOD_GET
 	
-	self._response = JSON.parse_string(body.get_string_from_utf8())
+	return await self._request(http_method, url, body, headers)
+
+
+func get_(url: String, headers: Dictionary = {}):
+	return await self._request(HTTPClient.METHOD_GET, url, {}, headers)
+
+
+func post(url: String, body: Dictionary = {}, headers: Dictionary = {}):
+	return await self._request(HTTPClient.METHOD_POST, url, body, headers)
+
+
+func put(url: String, body: Dictionary = {}, headers: Dictionary = {}):
+	return await self._request(HTTPClient.METHOD_PUT, url, body, headers)
+
+
+func delete(url: String, body: Dictionary = {}, headers: Dictionary = {}):
+	return await self._request(HTTPClient.METHOD_DELETE, url, body, headers)
+
+
+func _request(method: HTTPClient.Method, url: String, body: Dictionary = {}, headers: Dictionary = {}):
+	var instance = generic_scene_tscn.instantiate()
+	add_child(instance)
+	var temp_response = await instance.http_request(method, url, body, headers)
+	instance.queue_free()
+	return temp_response

@@ -10,7 +10,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w72g2")
 
-[node name="CatVBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.5
@@ -23,36 +23,52 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="CatRichTextLabel" type="RichTextLabel" parent="CatVBoxContainer"]
+[node name="MethodLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Method"
+horizontal_alignment = 1
+
+[node name="MethodLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+text = "GET"
+placeholder_text = "Method"
+
+[node name="UrlLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "URL"
+horizontal_alignment = 1
+
+[node name="UrlLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+text = "http://127.0.0.1/status"
+placeholder_text = "URL"
+
+[node name="BodyLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Body"
+horizontal_alignment = 1
+
+[node name="BodyLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Body"
+
+[node name="HeadersLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Headers"
+horizontal_alignment = 1
+
+[node name="HeadersLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Body"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+text = "RESPONSE"
 metadata/_edit_use_anchors_ = true
 
-[node name="CatButton" type="Button" parent="CatVBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "CAT FACTS"
+text = "Make Request"
 
-[node name="DogVBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="DogRichTextLabel" type="RichTextLabel" parent="DogVBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="DogButton" type="Button" parent="DogVBoxContainer"]
-layout_mode = 2
-text = "DOG FACTS"
-
-[connection signal="pressed" from="CatVBoxContainer/CatButton" to="." method="_on_cat_button_pressed"]
-[connection signal="pressed" from="DogVBoxContainer/DogButton" to="." method="_on_dog_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

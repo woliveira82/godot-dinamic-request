@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://fipks4eb1l1c"]
+
+[ext_resource type="Script" path="res://generic_request.gd" id="1_r0dwm"]
+
+[node name="GenericRequest" type="HTTPRequest"]
+process_mode = 3
+timeout = 10.0
+script = ExtResource("1_r0dwm")
+
+[connection signal="request_completed" from="." to="." method="_on_request_completed"]

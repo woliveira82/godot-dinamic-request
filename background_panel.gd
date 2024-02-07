@@ -1,40 +1,16 @@
 extends Panel
 
-@onready var cat_rich_text := $CatVBoxContainer/CatRichTextLabel
-@onready var dog_rich_text := $DogVBoxContainer/DogRichTextLabel
+@onready var method_line_edit := $VBoxContainer/MethodLineEdit
+@onready var url_line_edit := $VBoxContainer/UrlLineEdit
+@onready var body_line_edit := $VBoxContainer/BodyLineEdit
+@onready var headers_linee_dit := $VBoxContainer/HeadersLineEdit
+@onready var response_rich_text := $VBoxContainer/RichTextLabel
 
 
 func _on_button_pressed():
-	var request = {
-		"method": "GET",
-		"url": "https://catfact.ninja/fact?max_length=100",
-	}
-	Service.post_request(request, self._handle)
-
-
-func _handle(response):
-	self.cat_rich_text = response.fact
-
-
-func _on_dog_button_pressed():
-	var request = {
-		"method": "GET",
-		"url": "https://dog-api.kinduff.com/api/facts?number=1",
-	}
-	Service.post_request(request, self._handle_dog_request)
-
-
-func _handle_dog_request(response):
-	self.dog_rich_text.text = response.facts[0]
-
-
-func _on_cat_button_pressed():
-	var request = {
-		"method": "GET",
-		"url": "https://catfact.ninja/fact?max_length=100",
-	}
-	Service.post_request(request, self._handle_cat_request)
-
-
-func _handle_cat_request(response):
-	self.cat_rich_text.text = response.fact
+	var response = await Service.request(
+		method_line_edit.text,
+		url_line_edit.text
+		)
+	
+	response_rich_text.text = response.data.status
