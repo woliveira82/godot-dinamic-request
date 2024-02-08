@@ -1,16 +1,21 @@
 extends HTTPRequest
 
-var _response := {"ok": false}
+var _response := {"ok": false, "data": "Error in request"}
 
 
-func http_request(method: HTTPClient.Method, url: String, body: Dictionary = {}, headers: Dictionary = {}):
+func http_request(
+	method: HTTPClient.Method,
+	url: String,
+	body: Dictionary = {},
+ 	headers: Dictionary = {},
+):
 	var custom_headers = self._dict_to_packed_string_array(headers)
 	custom_headers.append("Content-Type: application/json")
 	
 	var request_data: String = ""
 	if body:
 		request_data = JSON.stringify(body)
-	
+
 	self.request(
 		url,
 		custom_headers,
@@ -27,8 +32,8 @@ func _on_request_completed(result, response_code, headers, body):
 		return
 	
 	self._response.ok = true
-	self._response.append(
-		{"data": JSON.parse_string(body.get_string_from_utf8()}
+	self._response.merge(
+		{"data": JSON.parse_string(body.get_string_from_utf8())}
 	)
 
 

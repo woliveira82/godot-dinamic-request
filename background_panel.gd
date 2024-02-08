@@ -12,5 +12,8 @@ func _on_button_pressed():
 		method_line_edit.text,
 		url_line_edit.text
 		)
-	
+	if not response.ok:
+		response_rich_text.text = response.data
+		return
+		
 	response_rich_text.text = response.data.status

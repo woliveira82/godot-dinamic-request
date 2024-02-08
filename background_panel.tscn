@@ -40,7 +40,7 @@ horizontal_alignment = 1
 
 [node name="UrlLineEdit" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
-text = "http://127.0.0.1/status"
+text = "http://127.0.0.1:8000/status"
 placeholder_text = "URL"
 
 [node name="BodyLabel" type="Label" parent="VBoxContainer"]
