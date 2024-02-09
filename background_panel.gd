@@ -10,8 +10,8 @@ extends Panel
 func _on_button_pressed():
 	var response = await Service.request(
 		method_line_edit.text,
-		url_line_edit.text
-		)
+		url_line_edit.text,
+	)
 	if not response.ok:
 		response_rich_text.text = response.data
 		return

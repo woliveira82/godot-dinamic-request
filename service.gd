@@ -1,6 +1,6 @@
 extends Node
 
-@export var generic_scene_tscn := preload("res://generic_request.tscn")
+@export var _generic_scene_tscn := preload("res://generic_request.tscn")
 
 
 func request(method: String, url: String, body: Dictionary = {}, headers: Dictionary = {}):
@@ -37,8 +37,8 @@ func delete(url: String, body: Dictionary = {}, headers: Dictionary = {}):
 
 
 func _request(method: HTTPClient.Method, url: String, body: Dictionary = {}, headers: Dictionary = {}):
-	var instance = generic_scene_tscn.instantiate()
+	var instance = self._generic_scene_tscn.instantiate()
 	add_child(instance)
-	var temp_response = await instance.http_request(method, url, body, headers)
+	var response = await instance.http_request(method, url, body, headers)
 	instance.queue_free()
-	return temp_response
+	return response

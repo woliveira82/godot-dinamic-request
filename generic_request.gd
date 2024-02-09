@@ -32,9 +32,7 @@ func _on_request_completed(result, response_code, headers, body):
 		return
 	
 	self._response.ok = true
-	self._response.merge(
-		{"data": JSON.parse_string(body.get_string_from_utf8())}
-	)
+	self._response.data = JSON.parse_string(body.get_string_from_utf8())
 
 
 func _dict_to_packed_string_array(dictionary: Dictionary) -> PackedStringArray:
